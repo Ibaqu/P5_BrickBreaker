@@ -7,19 +7,22 @@ var score = 0
 
 // Initialize brick array
 var bricks = [];
-for(let i=0; i<20; i++) {
-  let x = Math.random()*300 + 50;
-  let y = Math.random()*150 + 50;
-  while(checkOverlap(x, y)) {
-    x = Math.random()*300 + 50;
-    y = Math.random()*150 + 50;
+if (bricks.length === 0){
+  bricks.length = 0;
+  for(let i=0; i<20; i++) {
+    let x = Math.random()*300 + 50;
+    let y = Math.random()*150 + 50;
+    while(checkOverlap(x, y)) {
+      x = Math.random()*300 + 50;
+      y = Math.random()*150 + 50;
+    }
+    bricks.push({
+      x: x,
+      y: y,
+      width: 50,
+      height: 20,
+    });
   }
-  bricks.push({
-    x: x,
-    y: y,
-    width: 50,
-    height: 20,
-  });
 }
 
 function checkOverlap(x, y) {
@@ -44,6 +47,26 @@ function draw() {
     fill('#d9c3f7');
     rect(bricks[i].x, bricks[i].y, bricks[i].width, bricks[i].height);
   }
+  
+    //Check if all bricks are broken
+    if(bricks.length == 0) {
+      //Redraw bricks
+      for(let i=0; i<20; i++) {
+        let x = Math.random()*300 + 50;
+        let y = Math.random()*150 + 50;
+        while(checkOverlap(x, y)) {
+          x = Math.random()*300 + 50;
+          y = Math.random()*150 + 50;
+        }
+        bricks.push({
+          x: x,
+          y: y,
+          width: 50,
+          height: 20,
+        });
+      }
+    }
+
 
   //Render Ball
   fill('#d9c3f7');
