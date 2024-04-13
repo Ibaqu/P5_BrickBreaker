@@ -8,12 +8,27 @@ var score = 0
 // Initialize brick array
 var bricks = [];
 for(let i=0; i<20; i++) {
+  let x = Math.random()*300 + 50;
+  let y = Math.random()*150 + 50;
+  while(checkOverlap(x, y)) {
+    x = Math.random()*300 + 50;
+    y = Math.random()*150 + 50;
+  }
   bricks.push({
-    x: Math.random()*400,
-    y: 100 + 20*i,
-    width: 70,
+    x: x,
+    y: y,
+    width: 50,
     height: 20,
   });
+}
+
+function checkOverlap(x, y) {
+  for(let i=0; i<bricks.length; i++) {
+    if(x + 50 > bricks[i].x && x < bricks[i].x + 50 && y + 20 > bricks[i].y && y < bricks[i].y + 20) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function draw() {
@@ -52,7 +67,7 @@ function checkCol() {
     if(xBall + 10 > bricks[i].x && xBall - 10 < bricks[i].x + bricks[i].width && yBall > bricks[i].y && yBall < bricks[i].y + bricks[i].height) {
       ySpeed *= -1;
       bricks.splice(i, 1);
-      score++;
+      score += 5;
     }
   }
 }
